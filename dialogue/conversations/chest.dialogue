@@ -1,0 +1,23 @@
+~ start_cow_pasture_box
+
+喂养箱子: [[嗨嗨|您好呀|哈喽]], 您的奶牛想吃点东西。
+喂养箱子: 您想饲喂您的奶牛吗？
+- 是的
+	玩家: 让我来喂养这些可爱的奶牛吧。
+	do GameDialogueManager.action_feed_animals()
+- 哦不
+	玩家: 或许我有足够的牛奶，暂时不需要喂养。
+
+=> END
+
+~ start_chicken_pasture_box
+
+喂养箱子:  [[嗨嗨|您好呀|哈喽]], 您的小鸡想吃点东西。
+喂养箱子: 您想饲喂您的小鸡吗？
+- 是的
+	玩家: 让我来喂养这些活泼的小鸡吧。
+	do GameDialogueManager.action_feed_animals()
+- 哦不
+	玩家: 或许我有足够的鸡蛋，暂时不需要喂养。
+
+=> END

@@ -1,0 +1,47 @@
+extends Node2D
+
+const balloon_scene = preload("res://dialogue/game_dialogue_balloon.tscn")
+const guide_dialogue = preload("res://dialogue/conversations/guide.dialogue")
+const guide_after_tools_dialogue = preload("res://dialogue/conversations/guide_after_tools.dialogue")
+
+@onready var interactable_component: InteractableComponet = $InteractableCompone
+@onready var interactable_label_component: Control = $InteractableLabelComponent
+
+var in_range:bool
+
+func _ready() -> void:
+	interactable_component.interactable_activated.connect(on_interactable_activated)
+	interactable_component.interactable_deactivated.connect(on_interactable_deactivated)
+	interactable_label_component.hide()
+	
+	GameDialogueManager.give_crop_seeds.connect(on_give_crop_seeds)
+
+
+func on_interactable_activated() -> void:
+	interactable_label_component.show()
+	in_range = true
+
+
+func on_interactable_deactivated() -> void:
+	interactable_label_component.hide()
+	in_range = false
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if in_range:
+		if event.is_action_pressed("show_dialogue"):
+			var balloon: BaseGameDialogueBalloon = balloon_scene.instantiate()
+			get_tree().current_scene.add_child(balloon)
+			if GameDialogueManager.has_received_crop_seeds:
+				var random_title: String = "random_%s" % randi_range(1, 5)
+				balloon.start(guide_after_tools_dialogue, random_title)
+			else:
+				balloon.start(guide_dialogue, "start")
+
+
+
+func on_give_crop_seeds() -> void:
+	ToolManager.enable_tool_button(DataTypes.Tools.TillGround)
+	ToolManager.enable_tool_button(DataTypes.Tools.WaterCrops)
+	ToolManager.enable_tool_button(DataTypes.Tools.PlantCorn)
+	ToolManager.enable_tool_button(DataTypes.Tools.PlantTomato)

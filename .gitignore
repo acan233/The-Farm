@@ -1,0 +1,21 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local assistant/editor files
+.agents/
+.claude/
+
+# Exported builds
+export/
+exports/
+build/
+builds/
+dist/
+*.exe
+*.pck
+*.zip
+
+# OS/editor noise
+Thumbs.db
+.DS_Store
